@@ -1,0 +1,5 @@
+{
+  "name": "fredmosc-contato",
+  "private": true,
+  "scripts": { "deploy": "wrangler deploy" }
+}
