@@ -1,5 +1,21 @@
 [
   {
+    "title": "Lendo a fatura dos outros: 14 meses como arquiteto de pré-vendas na Magalu Cloud",
+    "excerpt": "O que faz um arquiteto de pré-vendas, as armadilhas que a fatura de nuvem esconde e por que a IA acelera o braçal, mas não assina a proposta.",
+    "date": "2026-10-18",
+    "readTime": "11 min",
+    "category": "Relato",
+    "tags": [
+      "Pré-vendas",
+      "Arquitetura cloud",
+      "Migração",
+      "FinOps",
+      "Carreira"
+    ],
+    "url": "articles/lendo-a-fatura-dos-outros.html",
+    "slug": "lendo-a-fatura-dos-outros"
+  },
+  {
     "title": "Engenharia de Escolhas: a soft skill por trás da soberania de dados",
     "excerpt": "Todo arquiteto sabe provisionar uma VM. O que separa o sênior é decidir com informação incompleta e deixar escrito o porquê.",
     "date": "2026-10-10",
