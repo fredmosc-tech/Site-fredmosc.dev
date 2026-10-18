@@ -2,11 +2,18 @@ name = "fredmosc-contato"
 main = "src/index.js"
 compatibility_date = "2026-10-01"
 
+# Só responde no domínio próprio; o endereço *.workers.dev da conta fica desligado
+workers_dev = false
 routes = [{ pattern = "api.fredmosc.tech", custom_domain = true }]
+
+[observability]
+enabled = true
 
 [vars]
 TO_EMAIL = "contato@fredmosc.tech"
 SENDER_EMAIL = "fred@news.fredmosc.tech"
 ALLOWED_ORIGINS = "https://fredmosc.tech,https://www.fredmosc.tech"
 
-# Segredos (não versionar): wrangler secret put BREVO_API_KEY / TURNSTILE_SECRET
+# Segredos (não versionar), configurados no painel do Worker:
+#   BREVO_API_KEY     chave da API do Brevo (conta fredmosc.tech)
+#   TURNSTILE_SECRET  secret do widget Turnstile do site

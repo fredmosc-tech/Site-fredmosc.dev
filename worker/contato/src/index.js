@@ -69,7 +69,7 @@ export default {
         replyTo: { email, name: nome },
         subject: `[Contato site] ${nome.slice(0, 60)}`,
         htmlContent: corpo,
-        textContent: `Nome: ${nome}\nE-mail: ${email}\nEnviado em: ${quando}\n\n${mensagem}`,
+        textContent: ['Nome: ' + nome, 'E-mail: ' + email, 'Enviado em: ' + quando, '', mensagem].join('\n'),
         tags: ['contato-site'],
       }),
     });
