@@ -369,3 +369,34 @@ a.tcard:hover{border-color:rgba(255,255,255,.45)}
 .shorts{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,220px));gap:20px}
 .shorts .vbody h3{font-size:15px}
 @media (max-width:760px){ #video-home-slot.is-short{grid-template-columns:1fr} #video-home-slot.is-short>div:first-child{max-width:260px} }
+
+/* ---------- Grid Check (GridStart Pro) ---------- */
+.gck{background:#001836;color:#fff}
+.gck .wrap{display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:center;padding-top:64px;padding-bottom:64px}
+.gck-k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--laranja)}
+.gck h2{font-size:40px;line-height:1.1;margin-top:10px;color:#fff}
+.gck p{font-size:17px;line-height:1.55;color:#C9D6E3;margin-top:14px}
+.gck p b{color:#fff}
+.gck-list{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-direction:column;gap:10px}
+.gck-list li{position:relative;padding-left:26px;font-size:15px;color:#DCE6EF}
+.gck-list li::before{content:"";position:absolute;left:0;top:7px;width:12px;height:12px;border-radius:3px;background:var(--verde)}
+.gck-btn{display:inline-block;margin-top:26px;background:var(--laranja);color:#fff;font-weight:700;font-size:17px;padding:16px 28px;border-radius:6px}
+.gck-btn:hover{filter:brightness(1.08)}
+.gck .gck-by{font-size:13px;color:#8FA4B8;margin-top:14px}
+.gck-fig{margin:0;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:var(--raio);padding:20px 16px 14px}
+.gck-radar{width:100%;height:auto;display:block}
+.gck-radar .rg{fill:none;stroke:rgba(255,255,255,.14);stroke-width:1}
+.gck-radar .ralvo{fill:none;stroke:#fff;stroke-width:1.5;stroke-dasharray:5 4;opacity:.8}
+.gck-radar .rvoce{fill:rgba(235,100,26,.28);stroke:var(--laranja);stroke-width:2}
+.gck-radar text{fill:#C9D6E3;font-size:11px;font-family:inherit}
+.gck-fig figcaption{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;color:#8FA4B8;margin-top:6px}
+.gck-fig figcaption em{font-style:normal;opacity:.7}
+.lg-voce,.lg-alvo{display:inline-block;width:14px;height:10px;border-radius:2px}
+.lg-voce{background:rgba(235,100,26,.5);border:1px solid var(--laranja)}
+.lg-alvo{border:1px dashed #fff;margin-left:10px}
+.gsp-gck .gsp-btn{background:var(--laranja);color:#fff;padding:12px 20px;border-radius:6px}
+@media (max-width:860px){
+  .gck .wrap{grid-template-columns:1fr;gap:28px;padding-top:44px;padding-bottom:44px}
+  .gck h2{font-size:30px}
+  .gck-btn{display:block;text-align:center}
+}
