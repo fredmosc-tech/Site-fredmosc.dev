@@ -45,7 +45,7 @@
   ],
   "palcos": [
     {"data": "2026-10-19", "horario": "19h", "evento": "Semana de Inovação Fundetec", "local": "Cascavel/PR", "tema": "Você Está Se Preparando Para Uma Vaga Que Não Existe Mais", "confirmado": true},
-    {"data": "2026-10-16", "evento": "Latinoware 2026", "local": "Foz do Iguaçu/PR", "tema": "Sua Fatura de Cloud Está Mentindo Para Você", "tese": "custo-invisivel-da-nuvem"},
+    {"data": "2026-10-16", "evento": "Latinoware 2026", "local": "Foz do Iguaçu/PR", "tema": "Sua Fatura de Cloud Está Mentindo Para Você", "tese": "custo-invisivel-da-nuvem", "destaque": true, "foto": "images/palestras/latinoware-destaque.jpg", "resumo": "O desconto esconde o consumo, o câmbio muda a conta e quase ninguém lê o preço antes de desenhar a arquitetura."},
     {"data": "2026-09-10", "evento": "The Developers Live", "por": "Papo de Sysadmin", "local": "Londrina/PR (online)", "tema": "Prompt Não é Arquitetura", "tese": "prompt-nao-e-arquitetura"},
     {"data": "2026-09-06", "evento": "HackTown", "local": "Santa Rita do Sapucaí/MG", "tema": "Prompt Não é Arquitetura", "tese": "prompt-nao-e-arquitetura", "destaque": true, "foto": "images/palestras/hacktown-destaque.jpg", "resumo": "Na trilha de IA corporativa do festival: a IA é o meio, a decisão continua sendo humana."},
     {"data": "2026-05-30", "evento": "The Developers Live Weekend", "local": "Maringá/PR", "tema": "Engenharia de Escolhas", "tese": "engenharia-de-escolhas"},
