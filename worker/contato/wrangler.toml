@@ -1,0 +1,12 @@
+name = "fredmosc-contato"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+routes = [{ pattern = "api.fredmosc.tech", custom_domain = true }]
+
+[vars]
+TO_EMAIL = "contato@fredmosc.tech"
+SENDER_EMAIL = "fred@news.fredmosc.tech"
+ALLOWED_ORIGINS = "https://fredmosc.tech,https://www.fredmosc.tech"
+
+# Segredos (não versionar): wrangler secret put BREVO_API_KEY / TURNSTILE_SECRET
