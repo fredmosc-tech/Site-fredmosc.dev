@@ -1,5 +1,10 @@
 {
   "name": "fredmosc-contato",
   "private": true,
-  "scripts": { "deploy": "wrangler deploy" }
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.151.1"
+  }
 }
