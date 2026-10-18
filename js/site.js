@@ -4,6 +4,7 @@
 
   var GA_ID = 'G-CWTC51T090';
   var BREVO_URL = 'https://ccbc6458.sibforms.com/serve/MUIFAGeGHkrSRoJSdkhS5x3gAu5YqyFxCdkR2FDNEyxxY1B6w61fXxRpVGc5S9Dhqd6iK_jEs6gxZHEwkal9pfvV93KQZac05-JAClkkNxAQ8CLEdbjqGKykZJB5Ffb1C7EGR10EXrKQhSSyTYcA7wJHcM1-6E6aZGFyxjXZi2T2LHDgmlks4KpSUNTz2B8siMpyTbxHXcz5VYseAw==?isAjax=1';
+  var CONTATO_URL = 'https://api.fredmosc.tech/contato';
   var TURNSTILE_KEY = '0x4AAAAAAFTaHdkwGqXzqStY';   // chave pública do widget (Cloudflare)
   var CONSENT_KEY = 'fm_consent_v1';
   var ROOT = document.body.getAttribute('data-root') || '';
@@ -352,46 +353,57 @@
     }).catch(function (e) { console.error('videos:', e); if (vHome) vHome.remove(); });
   }
 
+  /* ---------- Turnstile (anti-robô), compartilhado pelos formulários ---------- */
+  // O script só é carregado quando a pessoa começa a usar um formulário.
+  var tsScript = null;
+  function loadTsScript() {
+    if (tsScript) return tsScript;
+    tsScript = new Promise(function (ok, no) {
+      window.__onTurnstile = function () { ok(); };
+      var s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__onTurnstile';
+      s.async = true;
+      s.onerror = function () { tsScript = null; no(); };
+      document.head.appendChild(s);
+    });
+    return tsScript;
+  }
+  function turnstileFor(box) {
+    var id = null, wait = null, ready = null;
+    var prep = function () {
+      if (ready) return ready;
+      ready = loadTsScript().then(function () {
+        id = window.turnstile.render(box, {
+          sitekey: TURNSTILE_KEY, execution: 'execute', language: 'pt-br',
+          callback: function (t) { if (wait) { wait.ok(t); wait = null; } },
+          'error-callback': function () { if (wait) { wait.no(); wait = null; } }
+        });
+      }, function (e) { ready = null; throw e; });
+      return ready;
+    };
+    var get = function () {
+      return prep().then(function () {
+        return new Promise(function (ok, no) {
+          wait = { ok: ok, no: no };
+          window.turnstile.reset(id);
+          window.turnstile.execute(id);
+        });
+      });
+    };
+    get.preload = function () { prep().catch(function () {}); };
+    return get;
+  }
+
   /* ---------- newsletter (Brevo + Cloudflare Turnstile, com consentimento) ---------- */
   var form = $('#newsletter');
   if (form) {
     var msg = $('.form-msg', form), sub = $('button[type=submit]', form), tsBox = $('#nl-turnstile', form);
-    var tsId = null, tsReady = null, tsWait = null;
-
-    // Turnstile só é carregado quando a pessoa começa a usar o formulário
-    var loadTurnstile = function () {
-      if (tsReady) return tsReady;
-      tsReady = new Promise(function (ok, no) {
-        window.__onTurnstile = function () {
-          tsId = window.turnstile.render(tsBox, {
-            sitekey: TURNSTILE_KEY, execution: 'execute', language: 'pt-br',
-            callback: function (t) { if (tsWait) { tsWait.ok(t); tsWait = null; } },
-            'error-callback': function () { if (tsWait) { tsWait.no(); tsWait = null; } }
-          });
-          ok();
-        };
-        var s = document.createElement('script');
-        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__onTurnstile';
-        s.async = true;
-        s.onerror = function () { tsReady = null; no(); };
-        document.head.appendChild(s);
-      });
-      return tsReady;
-    };
-    var getToken = function () {
-      return loadTurnstile().then(function () {
-        return new Promise(function (ok, no) {
-          tsWait = { ok: ok, no: no };
-          window.turnstile.reset(tsId);
-          window.turnstile.execute(tsId);
-        });
-      });
-    };
+    var getToken = turnstileFor(tsBox);
     var fail = function (t) {
       sub.disabled = false; sub.textContent = 'Quero receber';
       msg.className = 'form-msg err'; msg.textContent = t;
     };
-    form.addEventListener('focusin', loadTurnstile, { once: true });
+    form.addEventListener('focusin', getToken.preload, { once: true });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -418,6 +430,41 @@
         }
       }).catch(function () {
         fail('A verificação anti-robô ou a conexão falhou. Tente de novo em instantes.');
+      });
+    });
+  }
+
+  /* ---------- contato (Worker na Cloudflare -> Brevo -> contato@fredmosc.tech) ---------- */
+  var cform = $('#contato');
+  if (cform) {
+    var cmsg = $('.form-msg', cform), csub = $('button[type=submit]', cform);
+    var cToken = turnstileFor($('#ct-turnstile', cform));
+    var cfail = function (t) {
+      csub.disabled = false; csub.textContent = 'Enviar mensagem';
+      cmsg.className = 'form-msg err'; cmsg.textContent = t;
+    };
+    cform.addEventListener('focusin', cToken.preload, { once: true });
+    if (/[?&]assunto=palestra/.test(location.search)) $('#ct-msg', cform).value = 'Convite para palestra\n\nEvento:\nData e cidade:\nPúblico:\n';
+    cform.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nome = $('#ct-nome', cform).value.trim(), email = $('#ct-email', cform).value.trim(), texto = $('#ct-msg', cform).value.trim();
+      if (!nome) return cfail('Diga seu nome.');
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return cfail('Confira o e-mail.');
+      if (texto.length < 10) return cfail('Escreva um pouco mais na mensagem.');
+      csub.disabled = true; csub.textContent = 'Enviando...'; cmsg.textContent = '';
+      cToken().then(function (token) {
+        return fetch(CONTATO_URL, {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ nome: nome, email: email, mensagem: texto, hp: $('#ct-hp', cform).value, token: token })
+        });
+      }).then(function (r) { return r.json(); }).then(function (data) {
+        if (data && data.ok) {
+          cform.innerHTML = '<p class="form-msg ok">Mensagem enviada. Chega direto no meu e-mail e eu respondo no endereço que você informou.</p>';
+        } else {
+          cfail('Não consegui enviar. Confira os campos e tente de novo.');
+        }
+      }).catch(function () {
+        cfail('A verificação anti-robô ou a conexão falhou. Tente de novo em instantes.');
       });
     });
   }

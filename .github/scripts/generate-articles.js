@@ -163,7 +163,7 @@ console.log(`\n✓ Generated articles index: articles-index.json`);
 
 // Sitemap: páginas fixas + artigos (lastmod só nos artigos, onde a data é confiável)
 const SITE = 'https://fredmosc.tech';
-const staticPages = ['', 'about.html', 'blog.html', 'palestras.html', 'videos.html', 'privacidade.html'];
+const staticPages = ['', 'about.html', 'blog.html', 'palestras.html', 'videos.html', 'privacidade.html', 'contato.html'];
 const urls = staticPages.map(p => `  <url><loc>${SITE}/${p}</loc></url>`);
 articlesIndex.forEach(a => {
     const lastmod = /^\d{4}-\d{2}-\d{2}$/.test(String(a.date)) ? `<lastmod>${a.date}</lastmod>` : '';
