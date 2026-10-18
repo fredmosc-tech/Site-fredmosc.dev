@@ -469,6 +469,12 @@
     });
   }
 
+  /* ---------- DevCheck: clique medido no GA4 (só roda se o GA foi aceito) ---------- */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('[data-devcheck]');
+    if (a && window.gtag) window.gtag('event', 'clique_devcheck', { local: a.getAttribute('data-devcheck') });
+  });
+
   /* ---------- artigo: compartilhar ---------- */
   var share = $('.share');
   if (share) {

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>DevCheck · fredmosc.tech</title>
+    <!-- Link curto para palco e slides: fredmosc.tech/devcheck?e=<evento>
+         Leva ao DevCheck com UTM: utm_source=fredmosc.tech, utm_medium=link-curto,
+         utm_campaign=palco-<evento> (ou "link-curto" quando não vier evento). -->
+    <meta http-equiv="refresh" content="2;url=https://dev-check.gridstart.pro/?utm_source=fredmosc.tech&amp;utm_medium=link-curto&amp;utm_campaign=link-curto">
+    <script>
+        (function () {
+            var e = (new URLSearchParams(location.search).get('e') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 40);
+            var camp = e ? 'palco-' + e : 'link-curto';
+            location.replace('https://dev-check.gridstart.pro/?utm_source=fredmosc.tech&utm_medium=link-curto&utm_campaign=' + encodeURIComponent(camp));
+        })();
+    </script>
+    <style>body{font-family:system-ui,sans-serif;background:#001836;color:#fff;display:grid;place-items:center;min-height:100vh;margin:0;text-align:center}a{color:#EB641A}</style>
+</head>
+<body>
+    <p>Abrindo o DevCheck…<br><a href="https://dev-check.gridstart.pro/?utm_source=fredmosc.tech&amp;utm_medium=link-curto&amp;utm_campaign=link-curto">Clique aqui se não abrir.</a></p>
+</body>
+</html>
